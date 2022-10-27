@@ -2,6 +2,7 @@ package com.dereck.filesys.common.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -10,26 +11,26 @@ import java.util.List;
  */
 @Data
 @AllArgsConstructor
-public class Result {
+public class R {
     private Boolean success;
     private String errorMsg;
     private Object data;
     private Long total;
-
+    private HttpStatus httpStatus;
     /**
      * 正确返回
      * @return 返回一个正确的Result
      */
-    public static Result ok(){
-        return new Result(true, null, null, null);
+    public static R ok(){
+        return new R(true, null, null, null,HttpStatus.ACCEPTED);
     }
 
     /**
      * @param data 返回时捎带的数据
      * @return
      */
-    public static Result ok(Object data){
-        return new Result(true, null, data, null);
+    public static R ok(Object data){
+        return new R(true, null, data, null,HttpStatus.ACCEPTED);
     }
 
     /**
@@ -37,15 +38,15 @@ public class Result {
      * @param total 总共成功的条数 ？？？
      * @return
      */
-    public static Result ok(List<?> data, Long total){
-        return new Result(true, null, data, total);
+    public static R ok(List<?> data, Long total){
+        return new R(true, null, data, total,HttpStatus.ACCEPTED);
     }
 
     /**
      * @param errorMsg 返回错误信息
      * @return
      */
-    public static Result fail(String errorMsg){
-        return new Result(false, errorMsg, null, null);
+    public static R fail(String errorMsg,HttpStatus httpStatus){
+        return new R(false, errorMsg, null, null,httpStatus);
     }
 }

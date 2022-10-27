@@ -48,15 +48,6 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
-
-        <!-- https://mvnrepository.com/artifact/io.minio/minio -->
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.4.3</version>
-        </dependency>
-
-
     </dependencies>
 
 </project>

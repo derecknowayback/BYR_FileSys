@@ -12,5 +12,10 @@ public class User {
     /**用户姓名*/
     private String name;
 
+    /**用户邮箱*/
+    private String email;
+
+    /**用户密码*/
+    private String password;
 
 }

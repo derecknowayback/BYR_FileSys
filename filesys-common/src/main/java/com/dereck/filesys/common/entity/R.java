@@ -15,14 +15,13 @@ public class R {
     private Boolean success;
     private String errorMsg;
     private Object data;
-    private Long total;
     private HttpStatus httpStatus;
     /**
      * 正确返回
      * @return 返回一个正确的Result
      */
     public static R ok(){
-        return new R(true, null, null, null,HttpStatus.ACCEPTED);
+        return new R(true, null, null, HttpStatus.ACCEPTED);
     }
 
     /**
@@ -30,23 +29,16 @@ public class R {
      * @return
      */
     public static R ok(Object data){
-        return new R(true, null, data, null,HttpStatus.ACCEPTED);
+        return new R(true, null, data, HttpStatus.ACCEPTED);
     }
 
-    /**
-     * @param data 返回多元素
-     * @param total 总共成功的条数 ？？？
-     * @return
-     */
-    public static R ok(List<?> data, Long total){
-        return new R(true, null, data, total,HttpStatus.ACCEPTED);
-    }
+
 
     /**
      * @param errorMsg 返回错误信息
      * @return
      */
     public static R fail(String errorMsg,HttpStatus httpStatus){
-        return new R(false, errorMsg, null, null,httpStatus);
+        return new R(false, errorMsg, null, httpStatus);
     }
 }

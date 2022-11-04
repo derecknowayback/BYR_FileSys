@@ -10,7 +10,6 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>filesys-file</module>
-        <module>filesys-admin</module>
         <module>filesys-common</module>
     </modules>
 
@@ -25,45 +24,56 @@
         <druid.version>1.1.16</druid.version>
         <mybatis-plus.spring.boot.version>3.4.3</mybatis-plus.spring.boot.version>
         <redis.version>2.7.1</redis.version>
+        <common.pool>2.11.1</common.pool>
         <jackson.version>2.9.0</jackson.version>
         <security.version>2.7.5</security.version>
-        <jjwt.version>0.9.1</jjwt.version>
         <hutool.version>5.7.17</hutool.version>
+        <bootstrap.version>3.1.0</bootstrap.version>
     </properties>
 
 
     <!-- 子模块继承之后，提供作用：锁定版本+子modlue不用写groupId和version  -->
     <dependencyManagement>
         <dependencies>
-            <!--spring boot 2.2.2-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
-                <version>2.2.2.RELEASE</version>
+                <version>2.7.5</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--spring cloud Hoxton.SR1-->
+
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
-                <version>Hoxton.SR1</version>
+                <version>2021.0.4</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--spring cloud alibaba 2.1.0.RELEASE-->
+
             <dependency>
                 <groupId>com.alibaba.cloud</groupId>
                 <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>2.1.0.RELEASE</version>
+                <version>2021.0.4.0</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-bootstrap</artifactId>
+                <version>${bootstrap.version}</version>
+            </dependency>
+
+
+
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
+
+
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
@@ -83,11 +93,14 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
+
+
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
@@ -116,21 +129,17 @@
                 <version>${security.version}</version>
             </dependency>
 
-            <!--JWT依赖-->
-            <dependency>
-                <groupId>io.jsonwebtoken</groupId>
-                <artifactId>jjwt</artifactId>
-                <version>${jjwt.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
 
-
-
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-pool2</artifactId>
+                <version>${common.pool}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

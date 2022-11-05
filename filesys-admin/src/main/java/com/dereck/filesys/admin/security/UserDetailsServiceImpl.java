@@ -19,18 +19,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        LambdaQueryChainWrapper<User> wrapper = userService.lambdaQuery().eq(User::getName, username);
-        User loginUser = userService.getOne(wrapper);
+        User loginUser = userService.lambdaQuery().eq(User::getName, username).one();
         // 没有找到该用户
         if(ObjectUtil.isNull(loginUser)){
             throw new UsernameNotFoundException("没有此用户");
         }
-        // todo 添加用户权限到 LoginUser中
-
         return new LoginUser(loginUser);
     }
-
-
-
 
 }

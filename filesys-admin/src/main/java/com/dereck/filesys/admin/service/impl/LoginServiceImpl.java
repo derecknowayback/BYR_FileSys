@@ -13,12 +13,12 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -33,10 +33,13 @@ public class LoginServiceImpl implements LoginService {
     private AuthenticationManager authenticationManager;
 
 
+    @Resource
+    private PasswordEncoder passwordEncoder;
+
 
     public R login(User user){
         // 我们拿到授权了
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.getName(), user.getPassword(), null);
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(user.getName(),user.getPassword(), null);
         Authentication authenticate = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
         // 验证失败，没有这样的用户（实际上是在  LoginUser类中实现的）
         if(ObjectUtil.isNull(authenticate)){
@@ -45,9 +48,11 @@ public class LoginServiceImpl implements LoginService {
         // 验证成功，确实有这样的用户，往Redis里面存token
         LoginUser loginUser = (LoginUser)authenticate.getPrincipal();
         String userJson = JSONUtil.toJsonStr(loginUser);
-        stringRedisTemplate.opsForValue().set(RedisConstant.LOGIN  + user.getName(), userJson);
+        String key = RedisConstant.LOGIN + user.getName();
+        stringRedisTemplate.opsForValue().set(key, userJson);
+        stringRedisTemplate.expire(key,RedisConstant.USER_LOGIN_TTL, TimeUnit.MINUTES);
         // 返回给前端的token
-        return R.ok(RedisConstant.LOGIN  + user.getName());
+        return R.ok(key);
     }
 
     public R register(User user){
@@ -63,6 +68,7 @@ public class LoginServiceImpl implements LoginService {
         else if(!ReUtil.isMatch("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$",email)) {
             return R.fail("邮箱格式不正确", HttpStatus.BAD_REQUEST);
         }
+        user.setPassword(passwordEncoder.encode(password));
         // 存入数据库
         userService.save(user);
         // 存入 redis

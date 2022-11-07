@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.dereck.filesys.admin.security.LoginUser;
 import com.dereck.filesys.common.constant.RedisConstant;
+import com.dereck.filesys.common.entity.User;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-@Component
+// @Component
 public class TokenFilter extends OncePerRequestFilter {
 
     @Resource
@@ -40,7 +41,8 @@ public class TokenFilter extends OncePerRequestFilter {
             // 确实有这个token，那我们就刷新它，默认刷新时间30分钟
             stringRedisTemplate.expire(token, RedisConstant.USER_LOGIN_TTL, TimeUnit.MINUTES);
             // 封装Authentication对象
-            LoginUser loginUser = JSONUtil.toBean(userJson, LoginUser.class);
+            User user = JSONUtil.toBean(userJson, User.class);
+            LoginUser loginUser = new LoginUser(user);
             UsernamePasswordAuthenticationToken authenticationToken
                     = new UsernamePasswordAuthenticationToken(loginUser, null, null);
             // 存入SecurityContext

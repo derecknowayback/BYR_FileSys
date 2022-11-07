@@ -8,12 +8,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @TableName("files")
-public class SFile {
+public class SFile implements Serializable {
 
     public static final String UPLOAD_FAILED = "上传失败，请重新上传！";
 

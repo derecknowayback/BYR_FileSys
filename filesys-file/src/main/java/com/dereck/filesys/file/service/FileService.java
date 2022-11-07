@@ -11,4 +11,5 @@ public interface FileService extends IService<SFile>{
     SFile uploadFile(MultipartFile file, Integer expireTime, TimeUnit timeUnit) throws Exception;
 
     public List<SFile> getDownLoadUrl(String fileName);
+
 }

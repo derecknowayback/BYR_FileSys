@@ -33,15 +33,7 @@ public class OssTest {
 
     @Test
     public void testGetObject() throws Exception{
-        BufferedInputStream inputStream = new BufferedInputStream(MinioUtils.getObject(MinioConstant.BUCKET_NAME, "测试者", "D:\\pic\\言叶之庭.jpeg"));
-        BufferedOutputStream outputStream = new BufferedOutputStream(Files.newOutputStream(Paths.get("D:\\b_project\\byr_FileSys\\FileSys\\filesys-file\\src\\test\\resources\\言叶之庭.jpeg")));
-        byte [] buffer = new byte[1024];
-        int read = 0;
-        while (( read =inputStream.read(buffer))!= -1){
-            outputStream.write(buffer,0, read);
-        }
-        outputStream.close();
-        inputStream.close();
+
     }
 
 

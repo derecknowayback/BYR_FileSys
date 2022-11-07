@@ -17,8 +17,8 @@ import javax.annotation.Resource;
 @Configuration
 public class SecurityConfig {
 
-    @Resource
-    private TokenFilter tokenFilter;
+//    @Resource
+//    private TokenFilter tokenFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // 加一个token 校验器
-        httpSecurity.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
+        // httpSecurity.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
 

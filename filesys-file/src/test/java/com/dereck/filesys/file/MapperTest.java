@@ -22,5 +22,10 @@ public class MapperTest {
         fileService.save(new SFile("aaa","bbb","ccc", LocalDateTime.now()));
     }
 
+    @Test
+    public void testGetUrl(){
+        fileService.getDownLoadUrl("file").forEach(System.out::println);
+    }
+
 
 }

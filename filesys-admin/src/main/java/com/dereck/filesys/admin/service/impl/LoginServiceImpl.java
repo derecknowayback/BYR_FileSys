@@ -47,12 +47,12 @@ public class LoginServiceImpl implements LoginService {
         }
         // 验证成功，确实有这样的用户，往Redis里面存token
         LoginUser loginUser = (LoginUser)authenticate.getPrincipal();
-        String userJson = JSONUtil.toJsonStr(loginUser);
+        String userJson = JSONUtil.toJsonStr(loginUser.getUser());
         String key = RedisConstant.LOGIN + user.getName();
         stringRedisTemplate.opsForValue().set(key, userJson);
         stringRedisTemplate.expire(key,RedisConstant.USER_LOGIN_TTL, TimeUnit.MINUTES);
         // 返回给前端的token
-        return R.ok(key);
+        return R.ok(key+userJson);
     }
 
     public R register(User user){
@@ -63,7 +63,7 @@ public class LoginServiceImpl implements LoginService {
             return R.fail("用户名长度应该在1~20个字之间", HttpStatus.BAD_REQUEST);
         }
         else if(!ReUtil.isMatch("^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}$",password)){
-            return R.fail("密码必须包含大小写字母和数字的组合，可以使用特殊字符，长度在8-10之间)",HttpStatus.BAD_REQUEST);
+            return R.fail("密码必须包含大小写字母和数字的组合，可以使用特殊字符，长度在8-20之间",HttpStatus.BAD_REQUEST);
         }
         else if(!ReUtil.isMatch("^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$",email)) {
             return R.fail("邮箱格式不正确", HttpStatus.BAD_REQUEST);

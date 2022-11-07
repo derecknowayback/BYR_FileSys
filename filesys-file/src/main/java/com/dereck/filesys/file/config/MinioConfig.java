@@ -1,6 +1,7 @@
-package com.dereck.filesys.file.config.config;
+package com.dereck.filesys.file.config;
 
 import io.minio.MinioClient;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,12 +18,11 @@ public class MinioConfig {
     @Value("${minio.secret-key}")
     private String secretKey;
 
-
     @Bean
-    public MinioClient minioClient(){
+    public MinioClient minioClient() //throws InvalidPortException, InvalidEndpointException
+     {
         return MinioClient.builder().endpoint(endpoint).credentials(accessKey,secretKey).build();
+        // return new MinioClient(endpoint,accessKey,secretKey);
     }
-
-
 
 }

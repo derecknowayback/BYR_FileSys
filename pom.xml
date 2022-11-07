@@ -25,7 +25,7 @@
         <mybatis-plus.spring.boot.version>3.4.3</mybatis-plus.spring.boot.version>
         <redis.version>2.7.1</redis.version>
         <common.pool>2.11.1</common.pool>
-        <jackson.version>2.9.0</jackson.version>
+        <jackson.version>2.13.4</jackson.version>
         <security.version>2.7.5</security.version>
         <hutool.version>5.7.17</hutool.version>
         <bootstrap.version>3.1.0</bootstrap.version>

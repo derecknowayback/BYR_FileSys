@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -40,7 +41,7 @@ public class FileController {
 
     /**
      * 返回文件下载的url，支持模糊查询
-     * @param
+     * @param filename 请求的文件名
      * @return 返回一个Map，key: “文件名字-上传者” , value: 文件下载的url
      */
     @GetMapping("/download/{filename}")
@@ -50,16 +51,31 @@ public class FileController {
     }
 
 
-
+    /**
+     *  根据文件名字，返回文件的有关信息
+     * @param  filename 请求的文件名
+     * @return 单个文件对象
+     */
     @GetMapping("/preview/{filename}")
     public R previewFile(@PathVariable String filename){
-        // todo  预览文件
-        return null;
+        SFile sFile = fileService.previewFile(filename);
+        if(sFile == null){
+            return R.fail("没有这个文件",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return R.ok(sFile);
     }
 
-
-
-
-
-
+    /**
+     *  展示所有的文件
+     * @return 一个文件集合
+     */
+    @GetMapping("/listfiles")
+    public List<R> listAllFile(){
+        List<SFile> allFiles = fileService.list();
+        ArrayList<R> res = new ArrayList<>();
+        for (SFile file : allFiles) {
+            res.add(R.ok(file));
+        }
+        return res;
+    }
 }

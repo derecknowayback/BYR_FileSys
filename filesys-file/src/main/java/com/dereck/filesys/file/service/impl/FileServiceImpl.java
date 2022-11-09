@@ -3,16 +3,19 @@ package com.dereck.filesys.file.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dereck.filesys.common.constant.MinioConstant;
+import com.dereck.filesys.common.entity.R;
 import com.dereck.filesys.common.entity.SFile;
 import com.dereck.filesys.common.entity.StatusVar;
 import com.dereck.filesys.common.entity.User;
 import com.dereck.filesys.file.dto.FileMapper;
 import com.dereck.filesys.file.service.FileService;
 import com.dereck.filesys.file.utils.MinioUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -49,6 +52,19 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, SFile> implements F
                 .like(SFile::getName, "%" + fileName + "%").orderByDesc(SFile::getUpTime).list();
     }
 
+
+    /**
+     *  根据文件名查询
+     * @param filename
+     * @return
+     */
+    public SFile previewFile(@PathVariable String filename){
+        SFile file = lambdaQuery()
+                .select(SFile::getName, SFile::getUrl, SFile::getUpTime, SFile::getUpLoader)
+                .eq(SFile::getName, filename)
+                .one();
+        return file;
+    }
 
 
 

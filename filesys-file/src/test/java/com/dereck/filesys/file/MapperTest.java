@@ -19,7 +19,7 @@ public class MapperTest {
 
     @Test
     public void testInsertFile(){
-        fileService.save(new SFile("aaa","bbb","ccc", LocalDateTime.now()));
+        fileService.save(new SFile("aaa","bbb","ccc", LocalDateTime.now(),123L));
     }
 
     @Test

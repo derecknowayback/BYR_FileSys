@@ -88,7 +88,7 @@ public class MinioUtils {
                         .object(upName + "/" + upName +"-" +originalFilename)
                         .expiry(expireTime,timeUnit) // 过期时间最大只能是 7 天
                         .build());
-        return new SFile(file.getName(),url,upName,LocalDateTime.now());
+        return new SFile(file.getName(),url,upName,LocalDateTime.now(), file.getSize());
     }
 
 
@@ -109,6 +109,10 @@ public class MinioUtils {
                         .object(upName + "/" + upName + "-"+ fileName)
                         .build());
     }
+
+
+
+
 
 
 

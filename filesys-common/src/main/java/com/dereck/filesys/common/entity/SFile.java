@@ -38,10 +38,15 @@ public class SFile implements Serializable {
     @TableField("file_date")
     private LocalDateTime upTime;
 
-    public SFile(String name, String url, String upLoader, LocalDateTime upTime) {
+    /**文件大小*/
+    @TableField("file_size")
+    private Long size;
+
+    public SFile(String name, String url, String upLoader, LocalDateTime upTime,Long size) {
         this.name = name;
         this.url = url;
         this.upLoader = upLoader;
         this.upTime = upTime;
+        this.size = size;
     }
 }

@@ -17,7 +17,7 @@ public class LoginUser implements UserDetails{
 
     private User user;
 
-    // todo 权限设置
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;

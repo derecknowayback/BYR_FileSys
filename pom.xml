@@ -11,6 +11,8 @@
     <modules>
         <module>filesys-file</module>
         <module>filesys-common</module>
+        <module>filesys-admin</module>
+        <module>filsesys-gateway</module>
     </modules>
 
     <properties>
@@ -29,6 +31,8 @@
         <security.version>2.7.5</security.version>
         <hutool.version>5.7.17</hutool.version>
         <bootstrap.version>3.1.0</bootstrap.version>
+        <openfeign.version>3.1.5</openfeign.version>
+        <gateway.version>3.1.4</gateway.version>
     </properties>
 
 
@@ -140,6 +144,23 @@
                 <artifactId>commons-pool2</artifactId>
                 <version>${common.pool}</version>
             </dependency>
+
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${openfeign.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-gateway</artifactId>
+                <version>${gateway.version}</version>
+            </dependency>
+
+
+
 
         </dependencies>
     </dependencyManagement>

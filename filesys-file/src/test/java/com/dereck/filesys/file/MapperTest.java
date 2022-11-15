@@ -27,5 +27,12 @@ public class MapperTest {
         fileService.getDownLoadUrl("file").forEach(System.out::println);
     }
 
+    @Test
+    public void testLambda(){
+        fileService.lambdaQuery()
+                .select(SFile::getUrl, SFile::getUpLoader, SFile::getName,SFile::getUpTime)
+               .orderByDesc(SFile::getUpTime).list().forEach(System.out::println);
+    }
+
 
 }

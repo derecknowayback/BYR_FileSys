@@ -1,7 +1,6 @@
 package com.dereck.filesys.admin.security;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.dereck.filesys.admin.service.UserService;
 import com.dereck.filesys.common.entity.User;
 import org.springframework.security.core.userdetails.UserDetails;

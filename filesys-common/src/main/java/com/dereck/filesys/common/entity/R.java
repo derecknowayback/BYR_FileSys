@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
 
-import java.util.List;
-
 /**
  * 封装一个实体类，用于和前端交互
  */

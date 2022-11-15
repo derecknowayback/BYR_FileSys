@@ -1,19 +1,10 @@
 package com.dereck.filesys.file;
 
 
-import com.dereck.filesys.common.constant.MinioConstant;
-import com.dereck.filesys.file.utils.MinioUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

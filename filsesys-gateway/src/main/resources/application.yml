@@ -1,0 +1,40 @@
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: admin-login
+          uri: lb://filesys-admin
+          predicates:
+            - Path=/login
+            - Method=POST
+
+        - id: admin-register
+          uri: lb://filesys-admin
+          predicates:
+            - Path=/register
+            - Method=POST
+
+        - id: file-download
+          uri: lb://filesys-file
+          predicates:
+            - Path=/file/download/**
+            - Method=GET
+
+        - id: file-preview
+          uri: lb://filesys-file
+          predicates:
+            - Path=/file/preview/**
+            - Method=GET
+
+        - id: file-upload
+          uri: lb://filesys-file
+          predicates:
+            - Path=/file/upload
+            - Method=POST
+server:
+  port: 9527

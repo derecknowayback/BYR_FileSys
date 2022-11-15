@@ -5,7 +5,6 @@ import com.dereck.filesys.admin.dto.UserDTO;
 import com.dereck.filesys.admin.security.LoginUser;
 import com.dereck.filesys.admin.service.UserService;
 import com.dereck.filesys.common.entity.User;
-
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

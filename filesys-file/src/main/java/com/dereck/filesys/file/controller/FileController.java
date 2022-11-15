@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -50,11 +53,33 @@ public class FileController {
     }
 
 
-
-    @GetMapping("/preview/{filename}")
-    public R previewFile(@PathVariable String filename){
-        // todo  预览文件
-        return null;
+    /**
+     *  根据前端发来的文件名字返回文件的预览图
+     * @param filename 查询的文件名
+     */
+    @GetMapping("/preview/{username}/{filename}")
+    public void previewFile(@PathVariable String username,@PathVariable String filename, HttpServletResponse response){
+        InputStream previewFile;
+        OutputStream outputStream;
+        try {
+            previewFile = fileService.previewFile(filename,username);
+            outputStream = response.getOutputStream();
+            // 先写死，每个文件的预览图都是jpg格式
+            response.setContentType("image/jpg");
+            byte []buf = new byte[1024 * 10];
+            int len;
+            while ((len = previewFile.read(buf,0,1024*10)) > 0){
+                outputStream.write(buf,0,len);
+            }
+        }catch (Exception e){
+            // 出错就发送错误信息
+            try {
+                response.sendError(500,e.getMessage());
+            }catch (Exception exception){
+                e.printStackTrace();
+            }
+        }
+        return ;
     }
 
 

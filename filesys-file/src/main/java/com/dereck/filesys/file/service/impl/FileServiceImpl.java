@@ -5,14 +5,13 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.dereck.filesys.common.constant.MinioConstant;
 import com.dereck.filesys.common.entity.SFile;
 import com.dereck.filesys.common.entity.StatusVar;
-import com.dereck.filesys.common.entity.User;
 import com.dereck.filesys.file.dto.FileMapper;
 import com.dereck.filesys.file.service.FileService;
 import com.dereck.filesys.file.utils.MinioUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
+import java.io.InputStream;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -45,13 +44,14 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, SFile> implements F
      */
     public List<SFile> getDownLoadUrl(String fileName) {
         return this.lambdaQuery()
-                .select(SFile::getUrl, SFile::getUpLoader, SFile::getName, SFile::getUpTime)
+                .select(SFile::getUrl, SFile::getUpLoader, SFile::getName,SFile::getUpTime)
                 .like(SFile::getName, "%" + fileName + "%").orderByDesc(SFile::getUpTime).list();
     }
 
 
-
-
+    public InputStream previewFile(String fileName,String username) throws Exception {
+        return MinioUtils.getObject(MinioConstant.BUCKET_NAME,username, fileName);
+    }
 
 
 }

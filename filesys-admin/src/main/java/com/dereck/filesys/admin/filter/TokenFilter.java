@@ -4,11 +4,11 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.dereck.filesys.admin.security.LoginUser;
 import com.dereck.filesys.common.constant.RedisConstant;
+import com.dereck.filesys.common.entity.StatusVar;
 import com.dereck.filesys.common.entity.User;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.annotation.Resource;
@@ -47,6 +47,8 @@ public class TokenFilter extends OncePerRequestFilter {
                     = new UsernamePasswordAuthenticationToken(loginUser, null, null);
             // 存入SecurityContext
             SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            // 存入线程变量
+            StatusVar.saveUser(user);
         }
         filterChain.doFilter(request,response);
     }

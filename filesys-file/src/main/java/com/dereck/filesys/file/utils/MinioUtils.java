@@ -1,7 +1,6 @@
 package com.dereck.filesys.file.utils;
 
 
-
 import com.dereck.filesys.common.entity.SFile;
 import io.minio.*;
 import io.minio.http.Method;
@@ -11,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
@@ -96,9 +94,9 @@ public class MinioUtils {
 
     /**
      *  返回文件
-     * @param bucketName
-     * @param upName
-     * @param fileName
+     * @param bucketName 桶名字
+     * @param upName 上传者名称
+     * @param fileName 文件名
      * @return
      * @throws Exception
      */

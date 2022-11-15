@@ -3,7 +3,10 @@ package com.dereck.filesys.admin.controller;
 import com.dereck.filesys.admin.service.LoginService;
 import com.dereck.filesys.common.entity.R;
 import com.dereck.filesys.common.entity.User;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 

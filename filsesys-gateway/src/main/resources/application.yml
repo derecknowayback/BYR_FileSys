@@ -1,4 +1,3 @@
-
 spring:
   cloud:
     gateway:
@@ -11,7 +10,7 @@ spring:
           uri: lb://filesys-admin
           predicates:
             - Path=/login
-            - Method=POST
+            - Method=PUT
 
         - id: admin-register
           uri: lb://filesys-admin

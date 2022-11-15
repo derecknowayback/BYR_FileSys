@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -72,10 +73,10 @@ public class LoginServiceImpl implements LoginService {
         // 存入数据库
         userService.save(user);
         // 存入 redis
-        LoginUser loginUser = new LoginUser(user);
-        stringRedisTemplate.opsForValue().set(RedisConstant.LOGIN + user.getName(),JSONUtil.toJsonStr(loginUser));
+        String encode = passwordEncoder.encode(user.getName()).substring(20,40);
+        stringRedisTemplate.opsForValue().set(RedisConstant.LOGIN + encode,JSONUtil.toJsonStr(user));
         // 返回 token
-        return R.ok(RedisConstant.LOGIN + user.getName());
+        return R.ok(RedisConstant.LOGIN + encode);
     }
 
 

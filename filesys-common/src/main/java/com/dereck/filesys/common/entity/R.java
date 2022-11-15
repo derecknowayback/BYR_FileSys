@@ -2,6 +2,7 @@ package com.dereck.filesys.common.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.ToString;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
  */
 @Data
 @AllArgsConstructor
+@ToString
 public class R {
     private Boolean success;
     private String errorMsg;
@@ -39,4 +41,7 @@ public class R {
     public static R fail(String errorMsg,HttpStatus httpStatus){
         return new R(false, errorMsg, null, httpStatus);
     }
+
+
+
 }

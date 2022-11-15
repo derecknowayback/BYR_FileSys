@@ -30,7 +30,9 @@ public class FileController {
      * @return 上传成功就返回
      */
     @PostMapping("/upload")
-    public R uploadFile(@RequestBody MultipartFile file, @RequestParam(value = "expire",defaultValue = "-1")Integer expireTime){
+    public R uploadFile(@RequestBody MultipartFile file,
+                        @RequestParam(value = "expire",defaultValue = "-1")Integer expireTime){
+
         SFile sFile;
         try {
              sFile = fileService.uploadFile(file,expireTime,TimeUnit.DAYS);
@@ -79,7 +81,6 @@ public class FileController {
                 e.printStackTrace();
             }
         }
-        return ;
     }
 
 

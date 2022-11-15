@@ -29,7 +29,9 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, SFile> implements F
      */
     public SFile uploadFile(MultipartFile file, Integer expireTime, TimeUnit timeUnit) throws Exception {
         // 生成唯一文件名字，策略：id + 文件名
-        String userName = StatusVar.getUser().getName();
+        String userName ;
+        if(StatusVar.hasUser()) userName = StatusVar.getUser().getName();
+        else userName = "test";
         SFile newFile = MinioUtils.upLoadObject(MinioConstant.BUCKET_NAME, userName, file, expireTime, timeUnit);
         // 将url存到数据库里
         save(newFile);
@@ -44,7 +46,7 @@ public class FileServiceImpl extends ServiceImpl<FileMapper, SFile> implements F
      */
     public List<SFile> getDownLoadUrl(String fileName) {
         return this.lambdaQuery()
-                .select(SFile::getUrl, SFile::getUpLoader, SFile::getName,SFile::getUpTime)
+                .select(SFile::getName,SFile::getUrl, SFile::getUpLoader, SFile::getUpTime,SFile::getSize)
                 .like(SFile::getName, "%" + fileName + "%").orderByDesc(SFile::getUpTime).list();
     }
 

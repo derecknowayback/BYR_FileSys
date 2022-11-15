@@ -12,6 +12,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.io.InputStream;
 import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
@@ -79,12 +81,17 @@ public class MinioUtils {
             timeUnit = TimeUnit.DAYS;
         }
 
+
+        Map<String, String> reqParams = new HashMap<>();
+        reqParams.put("response-content-type", "application/octet-stream");
+
         String url = unique.minioClient.getPresignedObjectUrl(
                 GetPresignedObjectUrlArgs.builder()
                         .method(Method.GET)
                         .bucket(bucketName)
                         .object(upName + "/" + upName +"-" +originalFilename)
-                        .expiry(expireTime,timeUnit) // 过期时间最大只能是 7 天
+                        .expiry(expireTime,timeUnit)// 过期时间最大只能是 7 天
+                        .extraQueryParams(reqParams)
                         .build());
         return new SFile(file.getName(),url,upName,LocalDateTime.now(), file.getSize());
     }

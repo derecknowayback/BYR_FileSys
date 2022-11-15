@@ -9,6 +9,7 @@ import com.dereck.filesys.common.entity.User;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.annotation.Resource;
@@ -19,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-// @Component
+@Component
 public class TokenFilter extends OncePerRequestFilter {
 
     @Resource
@@ -34,7 +35,7 @@ public class TokenFilter extends OncePerRequestFilter {
             filterChain.doFilter(request,response);
             return;
         }
-        // 有了token,查下redis和数据库
+        // 有了token,查下redis和数据库，做token校验
         String userJson = stringRedisTemplate.opsForValue().get(token);
         // 如果已经登录了
         if(!StrUtil.isEmpty(userJson)){
